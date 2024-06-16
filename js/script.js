@@ -59,7 +59,7 @@ function getWeatherData() {
 
       // Menampilkan informasi cuaca
       weatherElement.innerHTML = `
-        <div class="flex flex-wrap items-center gap-2 md:gap-4 lg:gap-8">
+        <div class="flex flex-col lg:flex-row w-full items-center gap-2 md:gap-4 lg:gap-8">
           <h2 class="text-4xl md:text-5xl font-bold text-white">${temperature} °C</h2>
           <h5 class="text-xl text-white">${data.name}, ${data.sys.country}</h5>
           <div class="text-white flex items-center flex-col">
