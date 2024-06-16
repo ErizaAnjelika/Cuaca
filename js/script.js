@@ -1,3 +1,4 @@
+// Mendapatkan elemen input kota dan tombol "get weather"
 const cityInput = document.getElementById("cityInput");
 const getWeatherBtn = document.getElementById("getWeatherBtn");
 
@@ -10,8 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // Event listener untuk input kota saat menekan tombol Enter
 cityInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    event.preventDefault(); // Prevent default form submission
-    getWeatherData();
+    event.preventDefault(); // Mencegah form submission default
+    getWeatherData(); // Memanggil fungsi getWeatherData untuk mengambil data cuaca
   }
 });
 
@@ -24,9 +25,10 @@ getWeatherBtn.addEventListener("click", function () {
 function getWeatherData() {
   const city = cityInput.value.trim(); // Mengambil nilai input kota, dan menghilangkan spasi ekstra
   const apiKey = "91bbacb09bc80341dc61bde2982d8bbf";
+  // URL untuk memanggil API OpenWeatherMap dengan nama kota dan API key
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-  // Mengatur background image sesuai dengan cuaca
+  // Menampilkan elemen skeleton sebelum mengambil data cuaca
   const weatherDetails = document.getElementById("weatherDetails");
   weatherDetails.innerHTML = `
     <div class="flex items-center justify-between">
@@ -47,19 +49,20 @@ function getWeatherData() {
     </div>
   `;
 
+  // Mengambil data cuaca dari OpenWeatherMap API menggunakan axios
   axios
     .get(apiUrl)
     .then((response) => {
       const data = response.data;
       const weatherElement = document.getElementById("weather");
       const weatherDetails = document.getElementById("weatherDetails");
-      const iconCode = data.weather[0].icon;
-      const temperature = Math.round(data.main.temp);
+      const iconCode = data.weather[0].icon; // mendapatkan kode ikon
+      const temperature = Math.round(data.main.temp); // mendapatkan suhu dan membulatkanya
       const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
 
       // Menampilkan informasi cuaca
       weatherElement.innerHTML = `
-        <div class="flex flex-col lg:flex-row w-full items-center gap-2 md:gap-4 lg:gap-8">
+        <div class="flex flex-col w-full items-center gap-2 md:gap-4 lg:gap-8">
           <h2 class="text-4xl md:text-5xl font-bold text-white">${temperature} °C</h2>
           <h5 class="text-xl text-white">${data.name}, ${data.sys.country}</h5>
           <div class="text-white flex items-center flex-col">
